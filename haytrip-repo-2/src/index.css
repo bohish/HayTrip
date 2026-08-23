@@ -1,6 +1,7 @@
 /* HayTrip — Brand System v2
-   Visual identity aligned to the approved H + travel-path direction.
-   Core palette: #0B1D1B / #125E4B / #22C55E / #F5F7FA / #E6E9ED
+   Approved identity palette:
+   Deep #0B1D1B · Green #125E4B · Accent #22C55E ·
+   Surface #F5F7FA · Line #E6E9ED
 */
 
 :root {
@@ -45,74 +46,45 @@ select {
 
 button { -webkit-tap-highlight-color: transparent; }
 
-/* ------------------------------------------------------------------
-   Preserve the existing React architecture while replacing the old
-   visual tokens with the approved HayTrip identity.
-   ------------------------------------------------------------------ */
+/* Existing App.jsx uses inline React styles. These selectors deliberately
+   distinguish text color from background color so the brand migration does
+   not accidentally turn every navy text element into a navy card. */
 
-[style*="#0B1523"], [style*="#0B1523"] * {
-  --hay-inline-deep: var(--hay-deep);
-}
+[style*="color: rgb(11, 21, 35)"] { color: var(--hay-deep) !important; }
+[style*="background: rgb(11, 21, 35)"] { background: var(--hay-deep) !important; }
+[style*="background-color: rgb(11, 21, 35)"] { background-color: var(--hay-deep) !important; }
+[style*="border-color: rgb(11, 21, 35)"] { border-color: var(--hay-deep) !important; }
 
-[style*="#0B1523"] {
-  color: var(--hay-deep) !important;
-  background-color: var(--hay-deep) !important;
-  border-color: var(--hay-deep) !important;
-}
+[style*="color: rgb(22, 199, 132)"] { color: var(--hay-green) !important; }
+[style*="background: rgb(22, 199, 132)"] { background: var(--hay-green) !important; }
+[style*="background-color: rgb(22, 199, 132)"] { background-color: var(--hay-green) !important; }
+[style*="border-color: rgb(22, 199, 132)"] { border-color: var(--hay-green) !important; }
 
-[style*="#16C784"] {
-  color: var(--hay-green) !important;
-  background-color: var(--hay-green) !important;
-  border-color: var(--hay-green) !important;
-}
+[style*="color: rgb(15, 164, 108)"] { color: var(--hay-green-dark) !important; }
+[style*="background: rgb(15, 164, 108)"] { background: var(--hay-green-dark) !important; }
+[style*="background-color: rgb(15, 164, 108)"] { background-color: var(--hay-green-dark) !important; }
+[style*="border-color: rgb(15, 164, 108)"] { border-color: var(--hay-green-dark) !important; }
 
-[style*="#0FA46C"] {
-  color: var(--hay-green-dark) !important;
-  background-color: var(--hay-green-dark) !important;
-  border-color: var(--hay-green-dark) !important;
-}
+[style*="color: rgb(15, 118, 110)"] { color: var(--hay-green-dark) !important; }
+[style*="background: rgb(15, 118, 110)"] { background: var(--hay-green-dark) !important; }
+[style*="background-color: rgb(15, 118, 110)"] { background-color: var(--hay-green-dark) !important; }
 
-[style*="#0F766E"] {
-  color: var(--hay-green-dark) !important;
-  background-color: var(--hay-green-dark) !important;
-  border-color: var(--hay-green-dark) !important;
-}
+[style*="background: rgb(242, 244, 247)"] { background: var(--hay-surface) !important; }
+[style*="background-color: rgb(242, 244, 247)"] { background-color: var(--hay-surface) !important; }
+[style*="border-color: rgb(228, 232, 237)"] { border-color: var(--hay-line) !important; }
+[style*="color: rgb(16, 22, 31)"] { color: var(--hay-deep) !important; }
+[style*="color: rgb(116, 128, 140)"] { color: var(--hay-muted) !important; }
 
-[style*="#F2F4F7"] {
-  background-color: var(--hay-surface) !important;
-}
-
-[style*="#E4E8ED"] {
-  border-color: var(--hay-line) !important;
-  background-color: var(--hay-line) !important;
-}
-
-[style*="#10161F"] {
-  color: var(--hay-deep) !important;
-}
-
-[style*="#74808C"] {
-  color: var(--hay-muted) !important;
-}
-
-[style*="#E8FBF3"] {
-  background-color: #EAF8F0 !important;
-}
-
-/* White cards remain white; give them the softer premium treatment from
-   the new identity without changing their functional structure. */
-
+/* Premium cards */
 [style*="background: rgb(255, 255, 255)"],
-[style*="background-color: rgb(255, 255, 255)"],
-[style*="background: #FFFFFF"],
-[style*="backgroundColor: #FFFFFF"] {
+[style*="background-color: rgb(255, 255, 255)"] {
   box-shadow: var(--hay-shadow);
 }
 
 /* ------------------------------------------------------------------
-   iPhone / Capacitor: the app must occupy the real viewport.
-   This specifically removes the "preview inside a rounded frame" look
-   that appeared when the app was launched on-device.
+   iPhone / Capacitor viewport fix.
+   The app must occupy the physical screen instead of looking like a
+   rounded preview card when installed on an iPhone.
    ------------------------------------------------------------------ */
 
 @media (max-width: 768px) {
@@ -143,27 +115,17 @@ button { -webkit-tap-highlight-color: transparent; }
   }
 }
 
-/* Safe-area support for modern iPhones. The existing bottom navigation and
-   top content keep their current structure; these rules only make them
-   breathe correctly around the Dynamic Island and home indicator. */
-
+/* Safe-area support for Dynamic Island / home indicator. */
 @supports (padding: env(safe-area-inset-bottom)) {
-  body {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  #root {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  #root { padding-bottom: env(safe-area-inset-bottom); }
 }
 
-/* Brand motion: restrained, premium feedback rather than playful bounce. */
+/* Restrained premium interaction feedback. */
 @media (prefers-reduced-motion: no-preference) {
   button {
     transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
   }
 
-  button:active {
-    transform: scale(0.985);
-  }
+  button:active { transform: scale(0.985); }
 }
