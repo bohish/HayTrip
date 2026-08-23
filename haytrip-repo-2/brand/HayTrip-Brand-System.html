@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HayTrip — Brand System</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#0B1523;
+    --navy-2:#132133;
+    --green:#16C784;
+    --green-dark:#0FA46C;
+    --teal:#0F766E;
+    --off:#F2F4F7;
+    --cream:#FFF3E0;
+    --cream-ink:#8A5A17;
+    --white:#FFFFFF;
+    --ink:#10161F;
+    --muted:#74808C;
+    --line:#E4E8ED;
+    --warn:#F59E0B;
+    --err:#E11D48;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--off); font-family:'Tajawal','Cairo',sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased;}
+  @font-face{font-family:'Tajawal';src:local('Cairo');}
+  .wrap{max-width:1080px; margin:0 auto; position:relative; padding:0 40px 120px;}
+
+  /* ---- the running route line: the signature element ---- */
+  .route{position:absolute; top:520px; bottom:120px; right:14px; width:2px; background:repeating-linear-gradient(to bottom, var(--green) 0 6px, transparent 6px 13px); z-index:0;}
+  .checkpoint{position:relative; z-index:1;}
+  .checkpoint .dot{position:absolute; right:-31px; top:6px; width:20px; height:20px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px var(--off);}
+  .checkpoint .dot span{font-family:'Cairo'; font-weight:800; font-size:9px; color:#fff;}
+
+  /* ---- hero ---- */
+  .hero{background:radial-gradient(circle at 15% 0%, #16324A, var(--navy) 55%); padding:90px 40px 100px; position:relative; overflow:hidden;}
+  .hero-inner{max-width:1080px; margin:0 auto; position:relative; z-index:2;}
+  .hero-glow{position:absolute; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(22,199,132,0.22), transparent 70%); top:-180px; left:-120px;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); color:#fff; font-family:'Tajawal'; font-size:12.5px; padding:7px 14px; border-radius:999px;}
+  .hero h1{font-family:'Cairo'; font-weight:800; font-size:52px; color:#fff; margin:26px 0 10px; line-height:1.15;}
+  .hero h1 span{color:var(--green);}
+  .hero p{font-family:'Tajawal'; font-weight:300; font-size:17px; color:rgba(255,255,255,0.62); max-width:560px; line-height:1.8; margin:0;}
+  .hero-route{margin-top:44px; display:flex; align-items:center; gap:0; max-width:520px;}
+
+  section{padding:64px 0 0; position:relative;}
+  .kicker{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+  .kicker .num{font-family:'Inter'; font-weight:700; font-size:12px; color:var(--green); letter-spacing:2px;}
+  .kicker .line{flex:1; height:1px; background:var(--line);}
+  h2.title{font-family:'Cairo'; font-weight:800; font-size:26px; margin:0 0 6px;}
+  .sub{font-family:'Tajawal'; font-weight:300; color:var(--muted); font-size:14px; margin:0 0 30px; max-width:620px; line-height:1.8;}
+
+  /* ---- logo section ---- */
+  .logo-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:16px;}
+  .panel{background:var(--white); border:1px solid var(--line); border-radius:20px; padding:26px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center;}
+  .panel.dark{background:var(--navy);}
+  .panel-label{font-family:'Tajawal'; font-size:11.5px; color:var(--muted);}
+  .panel.dark .panel-label{color:rgba(255,255,255,0.5);}
+  .icon-row{display:flex; align-items:flex-end; gap:14px; justify-content:center;}
+  .app-icon{border-radius:22%; background:var(--navy); display:flex; align-items:center; justify-content:center;}
+
+  /* ---- color system ---- */
+  .color-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  .swatch{border-radius:16px; overflow:hidden; border:1px solid var(--line); background:var(--white);}
+  .swatch .fill{height:88px;}
+  .swatch .meta{padding:12px 14px;}
+  .swatch .name{font-family:'Cairo'; font-weight:700; font-size:12.5px;}
+  .swatch .role{font-family:'Tajawal'; font-size:10.5px; color:var(--muted); margin-top:2px;}
+  .swatch .hex{font-family:'Inter'; font-size:10px; color:var(--muted); margin-top:6px; letter-spacing:0.5px;}
+
+  /* ---- typography ---- */
+  .type-row{display:flex; align-items:baseline; justify-content:space-between; padding:18px 0; border-bottom:1px solid var(--line); gap:20px;}
+  .type-row:last-child{border-bottom:none;}
+  .type-label{font-family:'Inter'; font-size:10.5px; color:var(--muted); letter-spacing:1px; width:120px; flex-shrink:0;}
+  .type-sample{font-family:'Cairo'; color:var(--ink); flex:1;}
+
+  /* ---- iconography ---- */
+  .icon-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:12px;}
+  .icon-tile{background:var(--white); border:1px solid var(--line); border-radius:16px; padding:18px 10px; display:flex; flex-direction:column; align-items:center; gap:10px;}
+  .icon-tile .ic{width:44px; height:44px; border-radius:13px; background:var(--off); display:flex; align-items:center; justify-content:center;}
+  .icon-tile span{font-family:'Tajawal'; font-size:10.5px; color:var(--ink);}
+
+  /* ---- AI language ---- */
+  .ai-card{background:var(--navy); border-radius:22px; padding:34px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px;}
+  .ai-tile{text-align:center;}
+  .ai-tile .cap{font-family:'Tajawal'; font-size:11px; color:rgba(255,255,255,0.5); margin-top:14px;}
+  .ai-tile .lbl{font-family:'Cairo'; font-weight:700; font-size:13px; color:#fff; margin-top:4px;}
+
+  /* ---- components ---- */
+  .comp-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .comp-panel{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:22px;}
+  .comp-panel .h{font-family:'Tajawal'; font-size:11px; color:var(--muted); margin-bottom:14px;}
+  .btn{font-family:'Cairo'; font-weight:700; font-size:13px; border-radius:13px; padding:11px 18px; border:none; display:inline-flex; align-items:center; gap:7px; cursor:default;}
+  .btn.primary{background:var(--green); color:#fff;}
+  .btn.secondary{background:#fff; color:var(--teal); border:1.5px solid var(--teal);}
+  .btn.ghost{background:var(--off); color:var(--navy);}
+  .chip{font-family:'Tajawal'; font-size:11.5px; background:var(--off); border:1px solid var(--line); border-radius:999px; padding:7px 13px; display:inline-flex; gap:6px; align-items:center;}
+  .badge{font-family:'Tajawal'; font-weight:700; font-size:10.5px; border-radius:999px; padding:4px 10px; display:inline-flex; align-items:center; gap:4px;}
+  .badge.success{background:#E8FBF3; color:var(--green-dark);}
+  .badge.ai{background:var(--cream); color:var(--cream-ink);}
+  .badge.warn{background:#FEF3E2; color:#B45309;}
+  .mini-card{border:1.5px solid var(--line); border-radius:15px; padding:14px; display:flex; justify-content:space-between; align-items:center;}
+  .mini-tab{display:flex; background:var(--off); border-radius:14px; padding:5px; gap:4px;}
+  .mini-tab div{flex:1; text-align:center; padding:9px 0; border-radius:10px; font-family:'Tajawal'; font-size:10.5px; color:var(--muted);}
+  .mini-tab div.active{background:#fff; color:var(--navy); font-weight:700; box-shadow:0 2px 6px rgba(11,21,35,0.08);}
+
+  /* ---- itinerary signature ---- */
+  .itin{background:var(--white); border:1px solid var(--line); border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:0;}
+  .itin-day{display:flex; align-items:center; gap:14px;}
+  .itin-dot{width:30px; height:30px; border-radius:50%; background:var(--green); color:#fff; font-family:'Cairo'; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .itin-day .t{font-family:'Cairo'; font-weight:700; font-size:13.5px;}
+  .itin-day .s{font-family:'Tajawal'; font-size:11px; color:var(--muted); margin-top:2px;}
+  .itin-link{width:2px; height:22px; background:repeating-linear-gradient(to bottom, var(--green) 0 3px, transparent 3px 6px); margin-right:14px;}
+
+  /* ---- brand in use (mini phones) ---- */
+  .phones{display:flex; gap:16px; overflow-x:auto; padding-bottom:10px;}
+  .phone{flex-shrink:0; width:172px; height:352px; background:#000; border-radius:30px; padding:7px;}
+  .phone .screen{width:100%; height:100%; border-radius:24px; overflow:hidden; background:var(--off); position:relative;}
+
+  footer{margin-top:80px; padding-top:28px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center;}
+  footer .f{font-family:'Tajawal'; font-size:11px; color:var(--muted);}
+
+  @media(max-width:820px){
+    .hero h1{font-size:34px;}
+    .logo-grid{grid-template-columns:1fr;}
+    .color-grid{grid-template-columns:repeat(2,1fr);}
+    .icon-grid{grid-template-columns:repeat(3,1fr);}
+    .ai-card{grid-template-columns:1fr;}
+    .comp-grid{grid-template-columns:1fr;}
+    .route{display:none;}
+    .checkpoint .dot{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">نظام الهوية البصرية — Brand System v1.0</span>
+    <h1>Hay<span>Trip</span></h1>
+    <p>وكيل سفر ذكي بهوية بصرية متكاملة — من الشعار إلى آخر بكسل في التطبيق. هذه الوثيقة توثّق كيف تتحدث كل عناصر HayTrip بلغة واحدة: الشعار، الألوان، الطباعة، الأيقونات، لغة الذكاء الاصطناعي، ومكونات الواجهة.</p>
+    <div class="hero-route" id="heroRoute"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="route"></div>
+
+  <!-- 01 LOGO -->
+  <section class="checkpoint" id="s1">
+    <div class="dot"><span>01</span></div>
+    <div class="kicker"><span class="num">01 — الشعار</span><div class="line"></div></div>
+    <h2 class="title">نظام الشعار</h2>
+    <p class="sub">حرف H كهيكل أساسي — مسار سفر أخضر يعبره وينتهي بطائرة صغيرة متكاملة مع المسار. الشعار مصمم ليبقى واضحًا من حجم أيقونة التطبيق إلى شاشة العرض الكاملة.</p>
+    <div class="logo-grid">
+      <div class="panel dark" style="grid-row:span 2; padding:40px;">
+        <svg width="120" height="132" viewBox="0 0 40 44" style="overflow:visible;">
+          <rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/>
+          <rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/>
+          <rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/>
+          <path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+          <g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#16C784"/></g>
+        </svg>
+        <div style="font-family:'Cairo'; font-weight:800; font-size:22px; color:#fff; margin-top:6px;">Hay<span style="color:#16C784;">Trip</span></div>
+        <div class="panel-label">اللوكاب الأساسي — الاستخدام على الخلفية الغامقة</div>
+      </div>
+      <div class="panel">
+        <svg width="56" height="62" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#0B1523"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/><g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#16C784"/></g></svg>
+        <div class="panel-label">العلامة المستقلة — بدون الاسم</div>
+      </div>
+      <div class="panel">
+        <svg width="56" height="62" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#0B1523"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#0B1523" stroke-width="3.6" fill="none" stroke-linecap="round" opacity="0.35"/><g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#0B1523" opacity="0.35"/></g></svg>
+        <div class="panel-label">النسخة الأحادية — للطباعة والفواتير</div>
+      </div>
+      <div class="panel" style="grid-column:span 2;">
+        <div class="icon-row">
+          <div class="app-icon" style="width:80px;height:80px;"><svg width="48" height="53" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/><g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#16C784"/></g></svg></div>
+          <div class="app-icon" style="width:58px;height:58px;"><svg width="34" height="38" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/><g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#16C784"/></g></svg></div>
+          <div class="app-icon" style="width:38px;height:38px;"><svg width="22" height="24" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/><g transform="translate(33,6) rotate(48)"><path d="M0,-6 L3.8,4 L0,1.8 L-3.8,4 Z" fill="#16C784"/></g></svg></div>
+        </div>
+        <div class="panel-label">أيقونة التطبيق بثلاثة أحجام — تبقى واضحة حتى بحجم 38px</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 COLOR -->
+  <section class="checkpoint" id="s2">
+    <div class="dot"><span>02</span></div>
+    <div class="kicker"><span class="num">02 — نظام الألوان</span><div class="line"></div></div>
+    <h2 class="title">لوحة الألوان</h2>
+    <p class="sub">كل لون له دور محدد. الأخضر مخصص للفعل والتوصية، التيل العميق لحالات الذكاء الاصطناعي، والكريمي الدافئ لتمييز اختيار HayTrip عن أي حالة نجاح عادية.</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="fill" style="background:#0B1523;"></div><div class="meta"><div class="name">Primary Navy</div><div class="role">الثقة، الملاحة، البنية</div><div class="hex">#0B1523</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#16C784;"></div><div class="meta"><div class="name">Primary Green</div><div class="role">الفعل، التوصية، الاختيار</div><div class="hex">#16C784</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#0F766E;"></div><div class="meta"><div class="name">Deep Teal</div><div class="role">حالات الذكاء الاصطناعي</div><div class="hex">#0F766E</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#F2F4F7;"></div><div class="meta"><div class="name">Off White</div><div class="role">خلفية التطبيق</div><div class="hex">#F2F4F7</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#FFF3E0;"></div><div class="meta"><div class="name">Warm Cream</div><div class="role">تمييز اختيار HayTrip</div><div class="hex">#FFF3E0</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#FFFFFF; border-bottom:1px solid var(--line);"></div><div class="meta"><div class="name">Surface White</div><div class="role">البطاقات والأسطح</div><div class="hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#F59E0B;"></div><div class="meta"><div class="name">Warning</div><div class="role">شروط، تنبيهات</div><div class="hex">#F59E0B</div></div></div>
+      <div class="swatch"><div class="fill" style="background:#E11D48;"></div><div class="meta"><div class="name">Error</div><div class="role">إلغاء، إجراءات حرجة</div><div class="hex">#E11D48</div></div></div>
+    </div>
+  </section>
+
+  <!-- 03 TYPE -->
+  <section class="checkpoint" id="s3">
+    <div class="dot"><span>03</span></div>
+    <div class="kicker"><span class="num">03 — الطباعة</span><div class="line"></div></div>
+    <h2 class="title">النظام الطباعي</h2>
+    <p class="sub">Cairo للعربية بتدرّج أوزان واضح، وInter كبديل بروح SF Pro للعناصر الإنجليزية والتقنية.</p>
+    <div class="panel" style="align-items:stretch; text-align:right; display:block;">
+      <div class="type-row"><span class="type-label">DISPLAY / 32</span><span class="type-sample" style="font-weight:800; font-size:32px;">وين ودك تروح؟</span></div>
+      <div class="type-row"><span class="type-label">H1 / 24 BOLD</span><span class="type-sample" style="font-weight:800; font-size:24px;">توصية HayTrip لرحلتك</span></div>
+      <div class="type-row"><span class="type-label">H2 / 18 BOLD</span><span class="type-sample" style="font-weight:700; font-size:18px;">اختيار HayTrip لك</span></div>
+      <div class="type-row"><span class="type-label">H3 / 15 SEMI</span><span class="type-sample" style="font-weight:600; font-size:15px;">لماذا اخترنا هذا؟</span></div>
+      <div class="type-row"><span class="type-label">BODY / 13 REG</span><span class="type-sample" style="font-weight:400; font-size:13px; font-family:'Tajawal';">رشحت لك هذا الخيار لأنه أفضل توازن بين السعر والراحة.</span></div>
+      <div class="type-row"><span class="type-label">CAPTION / 11</span><span class="type-sample" style="font-weight:400; font-size:11px; color:var(--muted); font-family:'Tajawal';">جدة → إسطنبول · 20 أكتوبر</span></div>
+      <div class="type-row"><span class="type-label">BUTTON / 14</span><span class="type-sample" style="font-weight:700; font-size:14px;">ابدأ مع HayTrip AI</span></div>
+      <div class="type-row"><span class="type-label">INTER / LABEL</span><span class="type-sample" style="font-family:'Inter'; font-weight:600; font-size:12px; letter-spacing:0.5px;">JED → IST · SAR 2,840</span></div>
+    </div>
+  </section>
+
+  <!-- 04 ICONS -->
+  <section class="checkpoint" id="s4">
+    <div class="dot"><span>04</span></div>
+    <div class="kicker"><span class="num">04 — الأيقونات</span><div class="line"></div></div>
+    <h2 class="title">لغة الأيقونات</h2>
+    <p class="sub">نفس سماكة الخط ونفس زوايا الأطراف عبر كل الأيقونات، مع أيقونة "الذكاء" المشتقة من مسار HayTrip نفسه بدل أي رمز AI عام.</p>
+    <div class="icon-grid">
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4.5-1 4.5 1v-1.5L13 19v-5.5z"/></svg></div><span>السفر</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l7-4 7 4v13"/><path d="M14 21v-6H10v6"/><path d="M3 21h18"/></svg></div><span>الفنادق</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="26" height="14" viewBox="0 0 36 19"><circle cx="3" cy="15.5" r="2.3" fill="#16C784"/><path d="M6 15 C 15 15.5, 21 9, 27 5" stroke="#16C784" stroke-width="1.6" stroke-dasharray="2.4 2.8" fill="none" stroke-linecap="round" opacity="0.55"/><g transform="translate(29.5,4) rotate(50)"><path d="M0,-5.6 L3.5,3.7 L0,1.7 L-3.5,3.7 Z" fill="#16C784"/></g></svg></div><span>ذكاء HayTrip</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v14M9 17l-3-3M9 17l3-3M15 21V7M15 7l-3 3M15 7l3 3"/></svg></div><span>المقارنة</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="8.5" cy="14.5" r="1" fill="#0B1523"/><circle cx="12" cy="14.5" r="1" fill="#0B1523"/></svg></div><span>الخطة</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><span>تأكيد الحجز</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></div><span>الدعم</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></div><span>الحساب</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg></div><span>المفضلة</span></div>
+      <div class="icon-tile"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1523" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><span>البحث</span></div>
+    </div>
+  </section>
+
+  <!-- 05 AI -->
+  <section class="checkpoint" id="s5">
+    <div class="dot"><span>05</span></div>
+    <div class="kicker"><span class="num">05 — لغة الذكاء البصرية</span><div class="line"></div></div>
+    <h2 class="title">HayTrip بدل النجمة</h2>
+    <p class="sub">بدل رمز الذكاء الاصطناعي العام (✨)، يستخدم HayTrip مساره الخاص: نقطة، خط، طائرة. نفس العنصر يظهر في التحميل، والتوصية، وسيناريوهات "جرّب غير".</p>
+    <div class="ai-card">
+      <div class="ai-tile">
+        <svg width="140" height="20" viewBox="0 0 140 20" style="margin:0 auto;"><line x1="6" y1="10" x2="134" y2="10" stroke="rgba(255,255,255,0.14)" stroke-width="2"/><line x1="6" y1="10" x2="80" y2="10" stroke="#16C784" stroke-width="2"/><circle cx="6" cy="10" r="4" fill="#16C784"/><circle cx="134" cy="10" r="4" fill="rgba(255,255,255,0.25)"/><g transform="translate(80,10) rotate(90)"><path d="M0,-8 L5,6 L0,3 L-5,6 Z" fill="#16C784"/></g></svg>
+        <div class="cap">الحالة 01</div><div class="lbl">HayTrip تبحث لك...</div>
+      </div>
+      <div class="ai-tile">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); padding:10px 16px; border-radius:999px;">
+          <svg width="20" height="11" viewBox="0 0 36 19"><circle cx="3" cy="15.5" r="2.3" fill="#16C784"/><path d="M6 15 C 15 15.5, 21 9, 27 5" stroke="#16C784" stroke-width="1.6" stroke-dasharray="2.4 2.8" fill="none" stroke-linecap="round" opacity="0.7"/><g transform="translate(29.5,4) rotate(50)"><path d="M0,-5.6 L3.5,3.7 L0,1.7 L-3.5,3.7 Z" fill="#16C784"/></g></svg>
+          <span style="font-family:'Cairo'; font-weight:700; font-size:11.5px; color:#fff;">اختيار HayTrip لك</span>
+        </div>
+        <div class="cap">الحالة 02</div><div class="lbl">شارة التوصية</div>
+      </div>
+      <div class="ai-tile">
+        <div style="width:52px; height:52px; border-radius:16px; background:rgba(22,199,132,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+          <svg width="24" height="26" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="cap">الحالة 03</div><div class="lbl">علامة وكيل السفر</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 COMPONENTS -->
+  <section class="checkpoint" id="s6">
+    <div class="dot"><span>06</span></div>
+    <div class="kicker"><span class="num">06 — مكونات الواجهة</span><div class="line"></div></div>
+    <h2 class="title">نظام المكونات</h2>
+    <p class="sub">زوايا 16–20، ظلال خفيفة جدًا، وأسطح بيضاء نظيفة — نفس اللغة من الأزرار إلى شريط التنقل.</p>
+    <div class="comp-grid">
+      <div class="comp-panel">
+        <div class="h">الأزرار</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn primary">ابدأ مع HayTrip AI</button>
+          <button class="btn secondary">تفاصيل الرحلة</button>
+          <button class="btn ghost">تبي تبحث بنفسك؟</button>
+        </div>
+      </div>
+      <div class="comp-panel">
+        <div class="h">الشارات والفلاتر</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <span class="badge success">مباشر</span>
+          <span class="badge ai">أفضل قيمة</span>
+          <span class="badge warn">إلغاء برسوم</span>
+          <span class="chip">✈ الرحلات</span>
+        </div>
+      </div>
+      <div class="comp-panel">
+        <div class="h">بطاقة مقارنة</div>
+        <div class="mini-card">
+          <div>
+            <div style="font-family:'Cairo'; font-weight:700; font-size:12.5px;">الخطوط السعودية</div>
+            <div style="font-family:'Tajawal'; font-size:10.5px; color:var(--muted); margin-top:2px;">JED → IST · مباشر</div>
+          </div>
+          <div style="font-family:'Cairo'; font-weight:800; font-size:14px; color:var(--green-dark);">2,840 ر.س</div>
+        </div>
+      </div>
+      <div class="comp-panel">
+        <div class="h">شريط التنقل</div>
+        <div class="mini-tab">
+          <div class="active">الرئيسية</div><div>رحلاتي</div><div>المفضلة</div><div>حسابي</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 ITINERARY SIGNATURE -->
+  <section class="checkpoint" id="s7">
+    <div class="dot"><span>07</span></div>
+    <div class="kicker"><span class="num">07 — الخطة اليومية</span><div class="line"></div></div>
+    <h2 class="title">المسار يربط الأيام</h2>
+    <p class="sub">نفس خط المسار الأخضر المستخدم في الشعار وحالات الذكاء، يظهر هنا ليربط بصريًا بين أيام الرحلة — بدل تقويم عادي.</p>
+    <div class="itin">
+      <div class="itin-day"><div class="itin-dot">1</div><div><div class="t">الوصول والاستقرار</div><div class="s">20 أكتوبر · إسطنبول</div></div></div>
+      <div class="itin-link"></div>
+      <div class="itin-day"><div class="itin-dot">2</div><div><div class="t">استكشاف إسطنبول القديمة</div><div class="s">21 أكتوبر · آيا صوفيا، البازار الكبير</div></div></div>
+      <div class="itin-link"></div>
+      <div class="itin-day"><div class="itin-dot">3</div><div><div class="t">الجانب الآسيوي والتسوق</div><div class="s">22 أكتوبر · كاديكوي</div></div></div>
+    </div>
+  </section>
+
+  <!-- 08 IN USE -->
+  <section class="checkpoint" id="s8">
+    <div class="dot"><span>08</span></div>
+    <div class="kicker"><span class="num">08 — التطبيق في الاستخدام</span><div class="line"></div></div>
+    <h2 class="title">هوية واحدة، منتج واحد</h2>
+    <p class="sub">من الشاشة الرئيسية إلى الخطة القابلة للمشاركة — كل شاشة تتحدث بنفس اللغة البصرية.</p>
+    <div class="phones">
+      <div class="phone"><div class="screen">
+        <div style="background:linear-gradient(160deg,#0B1523,#132133); height:56%; padding:16px;">
+          <svg width="18" height="20" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#F5F1E6"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#F5F1E6"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/></svg>
+          <div style="font-family:'Cairo'; font-weight:800; color:#fff; font-size:15px; margin-top:16px;">وين ودك تروح؟</div>
+          <div style="font-family:'Tajawal'; color:rgba(255,255,255,0.6); font-size:9px; margin-top:4px;">خل HayTrip تخططها لك</div>
+        </div>
+        <div style="background:#fff; margin:-20px 10px 0; border-radius:14px; padding:10px; position:relative; box-shadow:0 6px 14px rgba(0,0,0,0.1);">
+          <div style="font-family:'Tajawal'; font-size:7.5px; color:var(--muted);">اكتب طلب رحلتك...</div>
+          <div style="background:#16C784; border-radius:8px; text-align:center; padding:6px; margin-top:8px; font-family:'Cairo'; font-size:8px; color:#fff; font-weight:700;">ابدأ مع HayTrip AI</div>
+        </div>
+      </div></div>
+      <div class="phone"><div class="screen" style="background:#0B1523; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;">
+        <svg width="140" height="16" viewBox="0 0 140 20"><line x1="6" y1="10" x2="134" y2="10" stroke="rgba(255,255,255,0.14)" stroke-width="2"/><line x1="6" y1="10" x2="90" y2="10" stroke="#16C784" stroke-width="2"/><circle cx="6" cy="10" r="4" fill="#16C784"/><g transform="translate(90,10) rotate(90)"><path d="M0,-8 L5,6 L0,3 L-5,6 Z" fill="#16C784"/></g></svg>
+        <div style="font-family:'Cairo'; color:#fff; font-size:10px; font-weight:700;">HayTrip تبحث لك...</div>
+      </div></div>
+      <div class="phone"><div class="screen" style="padding:12px;">
+        <div style="font-family:'Cairo'; font-weight:800; font-size:11px; color:var(--navy);">توصية HayTrip</div>
+        <div style="background:#fff; border:1.5px solid #16C784; border-radius:12px; padding:10px; margin-top:10px;">
+          <div style="font-family:'Cairo'; font-weight:700; font-size:9px;">الخطوط السعودية</div>
+          <div style="font-family:'Cairo'; font-weight:800; font-size:12px; color:#0FA46C; margin-top:6px;">2,840 ر.س</div>
+        </div>
+        <div style="background:var(--cream); border-radius:10px; padding:8px; margin-top:8px; font-family:'Tajawal'; font-size:7px; color:var(--cream-ink); line-height:1.6;">رشحت لك هذا الخيار لأنه أفضل توازن بين السعر والراحة.</div>
+      </div></div>
+      <div class="phone"><div class="screen" style="padding:12px;">
+        <div style="background:linear-gradient(160deg,#16324A,#0B1523); border-radius:12px; padding:12px; color:#fff;">
+          <div style="font-family:'Cairo'; font-weight:800; font-size:13px;">🇹🇷 ISTANBUL</div>
+          <div style="font-family:'Tajawal'; font-size:8px; opacity:0.7; margin-top:3px;">20–25 OCTOBER</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; margin-top:10px;"><div style="width:16px;height:16px;border-radius:50%;background:#16C784; color:#fff; font-size:8px; display:flex; align-items:center; justify-content:center; font-family:Cairo; font-weight:800;">1</div><div style="font-family:'Cairo'; font-size:8px; font-weight:700;">الوصول والاستقرار</div></div>
+        <div style="width:2px; height:10px; background:repeating-linear-gradient(to bottom,#16C784 0 2px,transparent 2px 4px); margin-right:7px;"></div>
+        <div style="display:flex; align-items:center; gap:6px;"><div style="width:16px;height:16px;border-radius:50%;background:#16C784; color:#fff; font-size:8px; display:flex; align-items:center; justify-content:center; font-family:Cairo; font-weight:800;">2</div><div style="font-family:'Cairo'; font-size:8px; font-weight:700;">استكشاف إسطنبول</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f">HayTrip Brand System · v1.0 · نسخة داخلية للفريق</div>
+    <svg width="20" height="22" viewBox="0 0 40 44"><rect x="6" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="27" y="3" width="7" height="38" rx="3" fill="#0B1523"/><rect x="6" y="18.5" width="28" height="7" rx="3" fill="#0B1523"/><path d="M10 39 C 16 29, 22 22, 30 9" stroke="#16C784" stroke-width="3.6" fill="none" stroke-linecap="round"/></svg>
+  </footer>
+</div>
+
+</body>
+</html>

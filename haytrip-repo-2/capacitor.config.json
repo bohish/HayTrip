@@ -1,0 +1,6 @@
+{
+  "appId": "com.hisham.haytrip",
+  "appName": "HayTrip",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
