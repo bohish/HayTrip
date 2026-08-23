@@ -1,10 +1,169 @@
+/* HayTrip — Brand System v2
+   Visual identity aligned to the approved H + travel-path direction.
+   Core palette: #0B1D1B / #125E4B / #22C55E / #F5F7FA / #E6E9ED
+*/
+
+:root {
+  --hay-deep: #0B1D1B;
+  --hay-green-dark: #125E4B;
+  --hay-green: #22C55E;
+  --hay-surface: #F5F7FA;
+  --hay-line: #E6E9ED;
+  --hay-white: #FFFFFF;
+  --hay-muted: #64748B;
+  --hay-shadow: 0 18px 50px rgba(11, 29, 27, 0.10);
+}
+
 * { box-sizing: border-box; }
-html, body, #root {
+
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-width: 100%;
   min-height: 100%;
-  background: #12181F;
+  background: var(--hay-surface);
 }
+
+html { background: var(--hay-surface); }
+
 body {
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-family: Cairo, Tajawal, -apple-system, BlinkMacSystemFont, "SF Arabic", sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button { -webkit-tap-highlight-color: transparent; }
+
+/* ------------------------------------------------------------------
+   Preserve the existing React architecture while replacing the old
+   visual tokens with the approved HayTrip identity.
+   ------------------------------------------------------------------ */
+
+[style*="#0B1523"], [style*="#0B1523"] * {
+  --hay-inline-deep: var(--hay-deep);
+}
+
+[style*="#0B1523"] {
+  color: var(--hay-deep) !important;
+  background-color: var(--hay-deep) !important;
+  border-color: var(--hay-deep) !important;
+}
+
+[style*="#16C784"] {
+  color: var(--hay-green) !important;
+  background-color: var(--hay-green) !important;
+  border-color: var(--hay-green) !important;
+}
+
+[style*="#0FA46C"] {
+  color: var(--hay-green-dark) !important;
+  background-color: var(--hay-green-dark) !important;
+  border-color: var(--hay-green-dark) !important;
+}
+
+[style*="#0F766E"] {
+  color: var(--hay-green-dark) !important;
+  background-color: var(--hay-green-dark) !important;
+  border-color: var(--hay-green-dark) !important;
+}
+
+[style*="#F2F4F7"] {
+  background-color: var(--hay-surface) !important;
+}
+
+[style*="#E4E8ED"] {
+  border-color: var(--hay-line) !important;
+  background-color: var(--hay-line) !important;
+}
+
+[style*="#10161F"] {
+  color: var(--hay-deep) !important;
+}
+
+[style*="#74808C"] {
+  color: var(--hay-muted) !important;
+}
+
+[style*="#E8FBF3"] {
+  background-color: #EAF8F0 !important;
+}
+
+/* White cards remain white; give them the softer premium treatment from
+   the new identity without changing their functional structure. */
+
+[style*="background: rgb(255, 255, 255)"],
+[style*="background-color: rgb(255, 255, 255)"],
+[style*="background: #FFFFFF"],
+[style*="backgroundColor: #FFFFFF"] {
+  box-shadow: var(--hay-shadow);
+}
+
+/* ------------------------------------------------------------------
+   iPhone / Capacitor: the app must occupy the real viewport.
+   This specifically removes the "preview inside a rounded frame" look
+   that appeared when the app was launched on-device.
+   ------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  html,
+  body,
+  #root {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    height: 100dvh;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  body {
+    background: var(--hay-surface) !important;
+  }
+
+  #root > div {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* Safe-area support for modern iPhones. The existing bottom navigation and
+   top content keep their current structure; these rules only make them
+   breathe correctly around the Dynamic Island and home indicator. */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  #root {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Brand motion: restrained, premium feedback rather than playful bounce. */
+@media (prefers-reduced-motion: no-preference) {
+  button {
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  }
+
+  button:active {
+    transform: scale(0.985);
+  }
 }
